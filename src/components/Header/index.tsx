@@ -49,10 +49,10 @@ const Header = () => {
         </Container>
         <LinkContainer href='/meu-painel'>Serviços</LinkContainer>
         <LinkContainer href='/clientes'>Clientes</LinkContainer>
-        <LinkContainer>Estoque</LinkContainer>
+        <LinkContainer href='/estoque'>Estoque</LinkContainer>
         {user.type === 'gestor' && (
           <>
-            <LinkContainer>Funcionários</LinkContainer>
+            <LinkContainer href='funcionarios'>Funcionários</LinkContainer>
             <LinkContainer>Painel Financeiro</LinkContainer>
           </>
         )}
