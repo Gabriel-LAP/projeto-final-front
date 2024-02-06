@@ -7,7 +7,6 @@ import { LiContainer } from '../../components/Ul/Li';
 import { v4 } from 'uuid';
 import { Container } from '../../components/Container';
 import Modal from 'react-modal';
-// import { InfoContainer } from '../../components/Info';
 import Button from '../../components/Button';
 import { useClients } from '../../Hooks/useClients';
 import { useEffect, useState } from 'react';
@@ -16,6 +15,9 @@ import EditClientPanel from './EditClientPanel';
 import { deleteClient } from '../../services/userService';
 import { red } from '@mui/material/colors';
 import CreateClientPanel from './CreateClientPanel';
+import { insertMaskInCEP } from '../../mascaras/mascaraCEP';
+import { insertMaskInPhone } from '../../mascaras/mascaraPhone';
+import { insertMaskInCpf } from '../../mascaras/mascaraCpf';
 
 const ClientsPanelContainer = styled.div`
   display: flex;
@@ -40,16 +42,21 @@ const ClientsPanelContainer = styled.div`
 
 const modalStyle = {
   overlay: {
-    backgroundColor: `${colors.darckIce}`,
+    position: 'fixed',
+    top: 0,
+    left: 242,
+    right: 0,
+    bottom: 0,
+    backgroundColor: 'rgba(000, 000, 000, 0.6)',
   },
 
-  buttonWrapper: {
-    display: 'flex',
-    justifyContent: 'center',
-    width: '57rem',
-    gap: '4rem',
-  },
   content: {
+    top: '50%',
+    left: '50%',
+    right: 'auto',
+    bottom: 'auto',
+    marginRight: '-50%',
+    transform: 'translate(-50%, -50%)',
     border: '1px solid green',
     background: '#839cff',
     borderRadius: '20px',
@@ -57,8 +64,8 @@ const modalStyle = {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center',
-    gap: '4rem',
-    paddingTop: '3rem',
+    height: '35rem',
+    width: '70rem',
   },
 };
 
@@ -81,14 +88,9 @@ const ClientsPanel = () => {
     handleClients();
     // console.log(clients);
   }, []);
-
-  //   const handleClick = (client: Client) => {
-  //     setSelectedClient(client);
-
-  //     setIsOpen(true);
-
-  // console.log(order);
-  //   };
+  useEffect(() => {
+    console.log(clients);
+  }, [clients]);
 
   const handleEditButton = (client: Client) => {
     setSelectedClient(client);
@@ -100,10 +102,6 @@ const ClientsPanel = () => {
 
   const handleDeleteButton = (client: Client) => {
     return deleteClient(client);
-
-    // setIsOpen(true);
-
-    // console.log(order);
   };
 
   const handleEditClient = (fechaModal: boolean, conteudoModal: boolean) => {
@@ -111,8 +109,8 @@ const ClientsPanel = () => {
     setModalContent(conteudoModal);
     handleClients();
   };
-  const fecharModal = () => {
-    setIsOpen(false);
+  const fecharModal = (data) => {
+    setIsOpen(data);
   };
 
   const openCreateClientPanel = ({
@@ -138,27 +136,26 @@ const ClientsPanel = () => {
           </TituloContainer>
         </div>
         <UlComtainer padding='.9rem 0 0 0'>
-          <Button
-            text={'Novo Cliente'}
-            backgroundcolor={colors.purple}
-            height='3rem'
-            width='9rem'
-            color={colors.ice}
-            margin='.7rem 58rem 0 0'
-            onClick={() => setCreateClientPanelisOpen(true)}
-          />
+          {!createClientPanelisOpen && (
+            <Button
+              text={'Novo Cliente'}
+              backgroundcolor={colors.purple}
+              height='3rem'
+              width='9rem'
+              color={colors.ice}
+              margin='.7rem 58rem 0 0'
+              onClick={() => setCreateClientPanelisOpen(true)}
+            />
+          )}
 
           {createClientPanelisOpen ? (
-            <CreateClientPanel
-              openCreateClientPanel={() => openCreateClientPanel}
-              fechaModal={fecharModal}
-            />
+            <CreateClientPanel openCreateClientPanel={openCreateClientPanel} />
           ) : (
             clients.length > 0 &&
             clients.map((client) => (
               <LiContainer
                 display='flex'
-                height='13rem'
+                height='15rem'
                 gridRowRepeate='4, 25%'
                 gap='0'
                 spanSpace={false}
@@ -168,20 +165,21 @@ const ClientsPanel = () => {
                 <Container
                   width='55rem'
                   display='grid'
-                  height='160px'
+                  height='180px'
                   gridTemplateColumns='50% 50%'
-                  gridTemplateRows='repeat(4, 25%)'
+                  gridTemplateRows='repeat(5, 2.5rem)'
                   gap='0rem 0.8rem'
-                  alignItems='center'
+                  alignItems='top'
                 >
                   <span>Nome: {client.name}</span>
-                  <span>Telefone: {client.phone}</span>
+                  <span>Telefone: {insertMaskInPhone(client.phone)}</span>
                   <span>Email: {client.email}</span>
+                  <span>Cpf: {insertMaskInCpf(client.cpf)}</span>
                   <span>Endereço: {client.address}</span>
                   <span>Número: {client.number}</span>
                   <span>Cidade: {client.city}</span>
                   <span>Estado: {client.state}</span>
-                  <span>Cep: {client.zipCode}</span>
+                  <span>Cep: {insertMaskInCEP(client.zipCode)}</span>
                 </Container>
 
                 <Container
@@ -219,31 +217,6 @@ const ClientsPanel = () => {
           >
             {modalContent && (
               <>
-                <div className='buttonWrapper' style={modalStyle.buttonWrapper}>
-                  <Button
-                    type='button'
-                    onClick={fecharModal}
-                    text='Fechar'
-                    width='200px'
-                    height='40px'
-                    backgroundcolor={colors.purple}
-                    activebgcolor={colors.blue}
-                    color={colors.ice}
-                    boxshadow='0px 5px 10px rgba(0, 0, 0, 60)'
-                  />
-                  <Button
-                    type='button'
-                    text='Editar'
-                    onClick={() => setModalContent(false)}
-                    width='200px'
-                    height='40px'
-                    backgroundcolor={colors.purple}
-                    activebgcolor={colors.blue}
-                    color={colors.ice}
-                    boxshadow='0px 5px 10px rgba(0, 0, 0, 60)'
-                  />
-                </div>
-
                 {selectedClient && (
                   <EditClientPanel
                     client={selectedClient}
