@@ -7,14 +7,18 @@ const useClients = () => {
     const [selectedClient, setSelectedClient] = useState<Client>();
 
     const handleClients = async () => {
-        await getAllClients() 
-            .then((client) => {
-                setClients(client);
-            })
-            .catch((error) => {
-                console.log(error);
-                throw error;
-            })
+        try {
+            
+            const clientList = await getAllClients() 
+    
+            setClients(clientList.reverse());
+            
+        } catch (error) {
+            
+            console.log(error);
+            throw error;
+        }
+            
     }
     const handleUpdateClient = async (client: Client) => {
         const resp = await updateClient(client);
