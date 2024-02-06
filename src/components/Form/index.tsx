@@ -4,6 +4,7 @@ type FormProps = {
   display?: string;
   flexDirection?: string;
   alignItems?: string;
+  justifyContent?: string;
 
   gridtemplatecolumns?: string;
 
@@ -17,6 +18,7 @@ const FormContainer = styled.form.attrs({
   flex-direction: ${(props) => props.flexDirection};
   align-items: ${(props) => props.alignItems};
   grid-template-columns: ${(props) => props.gridtemplatecolumns};
+  justify-content: ${(props) => props.justifyContent};
 `;
 
 export { FormContainer };
