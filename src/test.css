@@ -1,0 +1,5 @@
+* {
+    background-image: url('../../../CoffeeShop/images/about-img.svg');
+    flex-direction: column;
+    margin: 5px;
+}
