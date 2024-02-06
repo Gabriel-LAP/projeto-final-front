@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Orders } from '../types/Orders';
-import { listOrders } from '../services/userService';
+import { getClientById, listOrders } from '../services/userService';
 
 
 
@@ -8,30 +8,38 @@ const useOrders = () => {
     const [orders, setOrders] = useState<Orders[]>([]);
 
     const [selectedOrder, setSelectedOrder] = useState<Orders>();
-    
-    
-    const priceFormate = (price: number) => {
-        return price.toLocaleString('pt-BR', {
-        style: 'currency',
-        currency: 'BRL',
-    });
+
+  const findOwnerName = async (id: string) => {
+    const clientName = await getClientById(id)
+    return clientName.name;
   };
 
   const handleOrders = async () => {
-    await listOrders()
-      .then((order) => {
-          setOrders(order);
-        // console.log(order);
-        // console.log(order);
-      })
-      .catch((error) => {
-        console.log(error);
-        throw error;
-      });
+    try{
+        const orderList = await listOrders()
+
+        const orderWithOwnerName = orderList.map(async (item) => {
+            // console.log(item)
+            const ownerName = await findOwnerName(item.owner._id)
+            // console.log(ownerName)
+            return {
+              ...item,
+                client_name: ownerName
+            }
+            
+        })
+        const orderPromise = await Promise.all(orderWithOwnerName)
+          setOrders(orderPromise.reverse());
+        // console.log(orders);
+      } catch(error) {
+          console.log(error.response.data);
+          throw error;
+          
+      }
+
   };
     return { 
-        orders, 
-        priceFormate, 
+        orders,  
         handleOrders, 
         selectedOrder, 
         setSelectedOrder,
