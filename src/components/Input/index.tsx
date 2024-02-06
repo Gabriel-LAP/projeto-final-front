@@ -39,7 +39,7 @@ input::-webkit-inner-spin-button {
 
   padding: 10px;
 
-  border-radius: 10px;
+  border-radius: 1px;
   border: none;
   border-bottom: 2px solid ${(props) => props.borderbcolor || colors.mint};
   transition: border-color 0.1s, border-radius 0.3s;
