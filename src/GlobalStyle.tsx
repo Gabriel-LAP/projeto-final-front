@@ -2,6 +2,7 @@ import { createGlobalStyle } from 'styled-components';
 import { colors } from './colors';
 
 export const GlobalStyle = createGlobalStyle`
+
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -34,7 +35,7 @@ footer, header, hgroup, menu, nav, section {
 
 body {
     line-height: 1;
-    backgroundolor: ${colors.purple}
+    background-color: ${colors.purple};
 }
 
 ol, ul {
@@ -65,5 +66,4 @@ input[type=number]::-webkit-inner-spin-button,
 input[type=number]::-webkit-outer-spin-button { 
   -webkit-appearance: none;
 }
-i
 `;
