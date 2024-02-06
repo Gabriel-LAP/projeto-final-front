@@ -9,32 +9,16 @@ import { useState } from 'react';
 import { createClient } from '../../../services/userService';
 import { Client } from '../../../types/Client';
 
-const CreateClientPanelContainer = styled.div` 
+const CreateClientPanelContainer = styled.div`
   display: 'flex';
   flex-direction: column;
   align-items: center;
-  gap: 4rem;
   width: 100%;
   height: 100%;
-  padding: 3rem 0 0 0;
-
-  .buttonWrapper {
-    display: flex;
-    justify-content: space-between;
-    width: 50rem;
-
-
+  padding: 2rem 0 0 0;
 `;
 
-const CreateClientPanel = ({
-  openCreateClientPanel,
-
-  fechaModal,
-}: {
-  openCreateClientPanel: (a: boolean) => void;
-
-  fechaModal: (a: boolean) => void;
-}) => {
+const CreateClientPanel = ({ openCreateClientPanel }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState<number>();
@@ -63,18 +47,13 @@ const CreateClientPanel = ({
   };
   return (
     <CreateClientPanelContainer>
-      <Container display='flex' width='50rem' justifyContent='space-between'>
-        <Button
-          type='button'
-          onClick={() => fechaModal(false)}
-          text='Fechar'
-          width='200px'
-          height='40px'
-          backgroundcolor={colors.purple}
-          activebgcolor={colors.blue}
-          color={colors.ice}
-          boxshadow='0px 5px 10px rgba(0, 0, 0, 60)'
-        />
+      <Container
+        display='flex'
+        width='50rem'
+        justifyContent='center'
+        margin='0 auto 4rem auto'
+        gap='8.5rem'
+      >
         <Button
           type='submit'
           text='Salvar'
@@ -86,14 +65,26 @@ const CreateClientPanel = ({
           boxshadow='0px 5px 10px rgba(0, 0, 0, 60)'
           onClick={handleCreateClient}
         />
+        <Button
+          type='button'
+          onClick={() => openCreateClientPanel(false)}
+          text='Fechar'
+          width='200px'
+          height='40px'
+          backgroundcolor={colors.purple}
+          activebgcolor={colors.blue}
+          color={colors.ice}
+          boxshadow='0px 5px 10px rgba(0, 0, 0, 60)'
+        />
       </Container>
 
       <FormContainer
         display='grid'
-        gridtemplatecolumns='50% 50%'
+        gridtemplatecolumns='45% 45%'
+        justifyContent='center'
         // onSubmit={handleUpdateOrder}
       >
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           Nome
           <InputContainer
             onChange={(e) => setName(e.target.value)}
@@ -109,7 +100,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Email
           <InputContainer
@@ -126,7 +117,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Telefone
           <InputContainer
@@ -143,7 +134,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Cpf
           <InputContainer
@@ -160,7 +151,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Endereço
           <InputContainer
@@ -177,7 +168,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Número
           <InputContainer
@@ -194,7 +185,7 @@ const CreateClientPanel = ({
           />
         </LabelContainer>
 
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Cidade
           <InputContainer
@@ -210,7 +201,7 @@ const CreateClientPanel = ({
             color={colors.purple}
           />
         </LabelContainer>
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Estado
           <InputContainer
@@ -226,7 +217,7 @@ const CreateClientPanel = ({
             color={colors.purple}
           />
         </LabelContainer>
-        <LabelContainer margin='0 0 1rem 0' width='420px' height='80px'>
+        <LabelContainer margin='0 auto 1rem auto' width='420px' height='80px'>
           {' '}
           Cep
           <InputContainer
