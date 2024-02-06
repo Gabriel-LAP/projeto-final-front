@@ -10,7 +10,7 @@ type ButtonProps = {
   activecolor?: string;
   type?: string;
   color?: string;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLElement>;
   display?: string;
   boxshadow?: string;
   style?: CSSProperties;
